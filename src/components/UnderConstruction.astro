@@ -1,0 +1,45 @@
+---
+/*
+  Small "work in progress" notice for pages whose content is still growing.
+  Sits under the page heading. The star twinkles slowly (off with reduced motion).
+*/
+---
+<p class="wip" role="note">
+  <svg class="wip-star" viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M8 0.5 C8.6 5.2 10.8 7.4 15.5 8 C10.8 8.6 8.6 10.8 8 15.5 C7.4 10.8 5.2 8.6 0.5 8 C5.2 7.4 7.4 5.2 8 0.5 Z" />
+  </svg>
+  <span><slot /></span>
+</p>
+
+<style>
+  .wip {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-top: 28px;
+    padding: 14px 20px 14px 16px;
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--bg-1) 82%, transparent);
+    color: var(--ink-2);
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+  .wip :global(strong) { color: var(--ink); font-weight: 600; }
+  .wip-star {
+    flex: none;
+    width: 14px;
+    height: 14px;
+    margin-top: 0.22em;
+    fill: var(--star);
+    filter: drop-shadow(0 0 4px rgb(240 217 168 / 0.55));
+    animation: wip-twinkle 3.6s ease-in-out infinite;
+  }
+  @keyframes wip-twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.78); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wip-star { animation: none; }
+  }
+</style>

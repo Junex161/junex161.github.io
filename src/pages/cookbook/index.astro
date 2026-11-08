@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import RecipeBook from '../../components/book/RecipeBook.vue';
+import UnderConstruction from '../../components/UnderConstruction.astro';
 import { getCollection } from 'astro:content';
 import type { Recipe, RecipeText } from '../../components/book/types';
 
@@ -40,6 +41,7 @@ const recipes: Recipe[] = [...bySlug.entries()]
   <header class="page-head wrap">
     <h1>Cookbook</h1>
     <p class="intro">Vegan comfort food from my kitchen, in English and German. Pick a recipe from the contents or just turn the pages.</p>
+    <UnderConstruction><strong>Still under construction.</strong> I'm still writing up recipes and checking the ones already here, so expect changes and new pages.</UnderConstruction>
   </header>
 
   <section class="wrap book-wrap">

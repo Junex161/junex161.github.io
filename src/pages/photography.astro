@@ -2,17 +2,19 @@
 import Base from '../layouts/Base.astro';
 import { Image, getImage } from 'astro:assets';
 import { sections } from '../data/photos';
+import UnderConstruction from '../components/UnderConstruction.astro';
 
 const all = sections.flatMap((s) => s.photos);
 const large = await Promise.all(
   all.map((p) => getImage({ src: p.src, width: Math.min(2400, p.src.width), format: 'webp', quality: 85 })),
 );
 let n = 0;
-const indexed = sections.map((s) => ({ ...s, photos: s.photos.map((p) => ({ ...p, i: n++ })) }));
+const indexed = sections.map((s) => ({ ...s, photos: s.photos.map((p, j) => ({ ...p, i: n++, no: j + 1 })) }));
 ---
 <Base title="Photography" description="Photography by Julian Karcher.">
   <header class="page-head wrap">
     <h1>Photography</h1>
+    <UnderConstruction><strong>Still under construction.</strong> This gallery is far from complete. More photos are on their way.</UnderConstruction>
   </header>
 
   <div class="wrap">
@@ -28,7 +30,7 @@ const indexed = sections.map((s) => ({ ...s, photos: s.photos.map((p) => ({ ...p
               <button type="button" class="frame" data-index={p.i} aria-label={`Open ${p.title} full size`}>
                 <Image src={p.src} alt={p.alt} widths={[480, 800, 1200]} sizes="(min-width: 900px) 540px, 100vw" quality={80} />
               </button>
-              <p class="cap"><span class="no num">{String(p.i + 1).padStart(2, '0')}</span>{p.title}</p>
+              <p class="cap"><span class="no num">{String(p.no).padStart(2, '0')}</span>{p.title}</p>
             </li>
           ))}
         </ul>

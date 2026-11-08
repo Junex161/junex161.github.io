@@ -11,12 +11,26 @@ const range = (e: { start?: string; end?: string }) => `${fmt(e.start)} – ${e.
 
 /* Edit freely: one entry per topic. */
 const interests = [
-  { title: 'Consciousness', text: 'What consciousness is, how it relates to the brain, and how it can be studied empirically.' },
-  { title: 'Psychedelic science', text: 'Psychedelics as a tool to study consciousness and as a possible treatment. I coordinated a uniMIND group of the MIND Foundation with a journal club and course on the topic.' },
-  { title: 'Open science', text: 'Preregistration, open data and materials, replication. I coordinate the Open Science working group of PsyFaKo.' },
+  { title: 'Consciousness', text: 'What consciousness is, how it arises from activity in the brain, and how it can be measured in the lab.' },
+  { title: 'Psychedelic science', text: 'Psychedelics as a tool for studying consciousness and as a possible treatment. I coordinated a uniMIND group of the MIND Foundation that ran a journal club on the topic.' },
+  { title: 'Modelling the brain', text: 'How the brain gives rise to perception, thought and behaviour, studied with neuroimaging such as EEG and fMRI and with artificial neural networks as models of brain function.' },
+  { title: 'Individual differences', text: 'How people differ in personality and related traits, measured beyond questionnaires: through behaviour, language and digital traces as well as physiological and neural data. My bachelor’s thesis looked for traces of self-esteem in the prompts people write to AI chatbots.' },
+  { title: 'Environmental psychology', text: 'Why people do or do not act on climate change, and what supports pro-environmental behaviour. In a project with IPU e.V. we study whether experiencing connectedness with others at a congress increases pro-environmental behaviour.' },
+  { title: 'Open science', text: 'Research that others can check and build on: preregistered studies, shared data and code, and replications. For me this runs through all of the topics above. Since June 2025 I coordinate the Open Science working group of PsyFaKo e.V.' },
 ];
 
-const experience = [pick('ude-personality'), pick('hohenheim'), pick('ude-tutor')];
+type Exp = { title: string; org: string; place?: string; detail?: string; url?: string; when: string };
+const experience: Exp[] = [
+  { ...pick('hohenheim'), when: range(pick('hohenheim')) },
+  { ...pick('ude-personality'), when: range(pick('ude-personality')) },
+  {
+    title: 'Bachelor’s thesis',
+    org: 'University of Duisburg-Essen',
+    detail: 'Traces of Self-Esteem in Human–AI Interaction: An Exploratory Study of Linguistic Cues in User Prompts.',
+    url: 'https://osf.io/eyrfb/',
+    when: 'May – Aug 2026',
+  },
+];
 ---
 <Base title="Research" description="Research interests and experience of Julian Karcher, Research Master student in psychology at the University of Amsterdam.">
   <header class="page-head wrap">
@@ -42,20 +56,12 @@ const experience = [pick('ude-personality'), pick('hohenheim'), pick('ude-tutor'
             <div>
               <h3>{e.title}</h3>
               <p class="org">{e.org}{e.place && `, ${e.place}`}</p>
-              {e.detail && <p class="muted">{e.detail}</p>}
+              {e.detail && <p class="muted">{e.detail}{e.url && <> <a href={e.url} target="_blank" rel="noopener">Read on OSF</a></>}</p>}
             </div>
-            <p class="when num">{range(e)}</p>
+            <p class="when num">{e.when}</p>
           </li>
         ))}
       </ol>
-    </section>
-
-    <section class="section" aria-label="Open science">
-      <h2>Open science</h2>
-      <div class="prose os">
-        <p>Since June 2025 I coordinate the Open Science working group of PsyFaKo e.V., the national conference of psychology student councils in Germany.</p>
-        <p>Projects and materials are on my <a href="https://osf.io/a9tvh/" rel="noopener">OSF profile</a>. My bachelor’s thesis is available on <a href="https://osf.io/eyrfb/" rel="noopener">OSF</a> as well.</p>
-      </div>
     </section>
   </div>
 </Base>
@@ -71,7 +77,6 @@ const experience = [pick('ude-personality'), pick('hohenheim'), pick('ude-tutor'
   .exp .org { margin-top: 4px; color: var(--ink-2); }
   .exp .muted { margin-top: 4px; font-size: .97rem; }
   .when { color: var(--ink-3); font-size: .93rem; white-space: nowrap; }
-  .os { max-width: 62ch; color: var(--ink-2); }
 
   @media (max-width: 700px) {
     .interests { grid-template-columns: 1fr; }
